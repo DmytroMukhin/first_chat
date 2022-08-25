@@ -13,7 +13,7 @@ return(
         </header>
         <div className='MessageStory'>
            {props.messageStory.map(story =>{
-            if(story.isAutor){
+            if(story.isAuthor){
               return(
               <ContactMessage id={story.id} text={story.messageText}/>
               )
