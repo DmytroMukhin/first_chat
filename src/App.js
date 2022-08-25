@@ -14,39 +14,39 @@ function App() {
   const [contacts, setContacts] = useState([
     {
       name: 'Peter', messageStory: [
-         {messageText: 'Hi', id: "2020-10-01 21:21:27", isAutor: true},
-         {messageText: "Hello", id:"2020-10-01 21:22:48", isAutor: false}
+         {messageText: 'Hi', id: "2020-10-01 21:21:27", isAuthor: true},
+         {messageText: "Hello", id:"2020-10-01 21:22:48", isAuthor: false}
       ]
   },
   {
     name: 'Monica', messageStory: [
-      {messageText: 'What you doing now', id: "2020-10-07 21:51:27", isAutor: true},
-      {messageText: "Watching Netflix ", id:"2020-10-07 21:52:28", isAutor: false}
+      {messageText: 'What you doing now', id: "2020-10-07 21:51:27", isAuthor: true},
+      {messageText: "Watching Netflix ", id:"2020-10-07 21:52:28", isAuthor: false}
     ]
   },
   {
     name: 'Jenifer', messageStory: [
-      {messageText: ' go to chill', id: "2020-10-10 20:21:27", isAutor: true},
-      {messageText: "why not", id:"2020-10-10 20:22:28", isAutor: false}
+      {messageText: ' go to chill', id: "2020-10-10 20:21:27", isAuthor: true},
+      {messageText: "why not", id:"2020-10-10 20:22:28", isAuthor: false}
     ]
   },
   {
     name: 'Simon', messageStory: [
-      {messageText: 'man, go play football', id: "2020-10-13 15:19:27", isAutor: true},
-      {messageText: "give me 5 minutes", id:"2020-10-13 13:22:28", isAutor: false}
+      {messageText: 'man, go play football', id: "2020-10-13 15:19:27", isAuthor: true},
+      {messageText: "give me 5 minutes", id:"2020-10-13 13:22:28", isAuthor: false}
     ]
   },
   {
     name: 'Bruce', messageStory: [
-      {messageText: 'hi, what`s up', id: "2020-10-16 18:10:27", isAutor: true},
-      {messageText: "not much, just eatting cookies", date:"2020-10-16 18:12:28", isAutor: false}
+      {messageText: 'hi, what`s up', id: "2020-10-16 18:10:27", isAuthor: true},
+      {messageText: "not much, just eatting cookies", date:"2020-10-16 18:12:28", isAuthor: false}
     ]
   }])
 
     
 let [messageStory, setMessageStory]= useState([
-        {messageText: 'Hi', id: "2020-10-01 21:21:27", isAutor: true},
-        {messageText: "Hello", id:"2020-10-01 21:22:48", isAutor: false}
+        {messageText: 'Hi', id: "2020-10-01 21:21:27", isAuthor: true},
+        {messageText: "Hello", id:"2020-10-01 21:22:48", isAuthor: false}
       ])
   
   
@@ -65,7 +65,7 @@ const ChangeMessageStory = (name, story) =>{
 
 const AddNewMessage=(e)=>{
     const newMessage ={
-      isAutor: false,
+      isAuthor: false,
       id: new Date().toLocaleString(),
       messageText
     }
@@ -80,39 +80,39 @@ const AddNewMessage=(e)=>{
               return {...contact, messageStory: newMessage}
           }
       })
-  })
+    })
    
     setMessageText('')
     setTimeout(getAnser, 8000)
-   }
+  }
 
 async function getAnser(e){
  const response = await axios.get('https://api.chucknorris.io/jokes/random')
 
- const newAnser= {
-  isAutor: true,
+ const newAnswer= {
+  isAuthor: true,
   id: new Date().toLocaleString(),
   messageText: response.data.value
  }
  
- setMessageStory(prevState => [...prevState, newAnser])
+ setMessageStory(prevState => [...prevState, newAnswer])
  
  setContacts(prevState => {
-  return prevState.map((contact, index) => {
+   return prevState.map((contact, index) => {
       if (contact.name !== currentContact) {
           return {...contact}
       } else {
           
           return {...contact, messageStory: [...contacts[index].messageStory, contact.messageStory, newAnser]}
       }
-  })
-})
-localStorage.setItem('contacts', JSON.stringify(contacts))
+   })
+ })
+ localStorage.setItem('contacts', JSON.stringify(contacts))
 }
   
 
 const sortedContacts = useMemo(() => {
-    return localContacts.filter(contact => contact.name.toLocaleLowerCase().includes(searchContacts))
+  return localContacts.filter(contact => contact.name.toLocaleLowerCase().includes(searchContacts))
   }, [searchContacts, localContacts])
 
   return (
