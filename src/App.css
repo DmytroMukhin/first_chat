@@ -1,38 +1,177 @@
-.App {
-  text-align: center;
+.Wrapper {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  border: 2px solid #918c8a;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.ContactsBlock {
+  width: 33%;
+  margin-right: 10px;
+  background-color: rgb(252, 248, 248);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.MessagesBlock {
   display: flex;
   flex-direction: column;
+  width: 66%;
+  margin-left: 10px;
+  border: 2px solid #84ac84;
+}
+
+.InputSearch{
+  height: 40px;
+  width: 80%;
+  margin: 20px auto;
+  padding-left: 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  font-size: 18px;
+  text-align: left;
+  outline: none;
+ 
+}
+.Contacts {
+  overflow: auto;
+  
+  height: 75%;;
+  font-size: xx-large;
+  padding-right: 10px;
+  
+}
+
+.Contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: large;
+  height: 90px;
+  width: 90%;
+  margin: 10px;
+  border: 1px solid rgb(196, 191, 191);
+  border-radius: 20px;
+}
+
+.Contacts :hover{
+background-color: #aaa;
+}
+
+
+.Search {
+ display: flex;
+ justify-content: center;
+ align-items: flex-end;
+ height: 150px;
+ background-color: #aaa;
+}
+
+
+.Icon {
+  width: 55px;
+  min-width: 55px;
+  height: 55px;
+  margin: 15px;
+  background-size: cover;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%
+}
+
+.SendMessageContainer{
+  
+  height: 120px;
+  background-color: #f3f3f3;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  position: relative;
+
 }
 
-.App-link {
-  color: #61dafb;
+.SendMessage{
+  height: 50px;
+  width: 90%;
+  max-width: 90%;
+  padding-left: 10px;
+  padding-right: 50px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  outline: none;
+  position: absolute;
+  font-size: 22px;
+}
+.SendMessageBtn{
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 20px;
+  z-index: 1;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header{
+  
+  height: 15vh;
+  background-color: #f3f3f3;
+  font-size: 1.5em;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.MessageStory{
+  padding-top: 15px;
+  height: 85vh;
+  background-color: #f5f5f5;
+  overflow-y: scroll;
+}
+
+.Message{
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    
+  
+}
+
+.MessageText{
+  background-color: #3e4857;
+    color: #fff;
+    font-size: 18px;
+    padding: 20px;
+    margin: 10px;
+    border: solid;
+    border-radius: 30px;
+  
+}
+
+.MyMessage{
+  display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+ 
+.MyMessageText{
+  background-color: #adadad;
+  font-size: 18px;
+  padding: 10px;
+  border: solid #adadad;
+  border-radius: 30px;
 }
