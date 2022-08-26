@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, } from 'react';
 import './App.css';
 import Contact from './components/Contact';
 import MessageStory from './components/MessageStory';
@@ -47,15 +47,18 @@ function App() {
 let [messageStory, setMessageStory]= useState([
         {messageText: 'Hi', id: "2020-10-01 21:21:27", isAuthor: true},
         {messageText: "Hello", id:"2020-10-01 21:22:48", isAuthor: false}
-      ])
+    ])
   
   
-const localContacts= JSON.parse(localStorage.getItem('contacts')) || contacts
+let localContacts =  JSON.parse(localStorage.getItem('contacts'))|| contacts
 
 const [messageText, setMessageText]= useState('')
-const[searchContacts, setSearchContacts]= useState('')
+const [searchContacts, setSearchContacts]= useState('')
 const [currentContact, setCurrentContact] = useState('messageStory')
-   
+function setLocalStorage() {
+   localStorage.setItem('contacts', JSON.stringify(contacts))
+     console.log(JSON.parse(localStorage.getItem('contacts')))
+}   
 const ChangeMessageStory = (name, story) =>{
     
     setCurrentContact(name)
@@ -63,7 +66,7 @@ const ChangeMessageStory = (name, story) =>{
    }
 
 
-const AddNewMessage=(e)=>{
+const AddNewMessage=()=>{
     const newMessage ={
       isAuthor: false,
       id: new Date().toLocaleString(),
@@ -73,27 +76,28 @@ const AddNewMessage=(e)=>{
     setMessageStory([...messageStory, newMessage])
     setContacts(prevState => {
      
-      return prevState.map(contact => {
+      return prevState.map((contact,index) => {
           if (contact.name !== currentContact) {
               return {...contact}
           } else {
-              return {...contact, messageStory: newMessage}
+              return {...contact, messageStory:[...contacts[index].messageStory, contact.messageStory, newMessage]}
           }
       })
     })
    
     setMessageText('')
-    setTimeout(getAnser, 8000)
+    setTimeout( getAnswer,6000)
+    setTimeout(setLocalStorage, 7000) 
   }
 
-async function getAnser(e){
+async function getAnswer(){
  const response = await axios.get('https://api.chucknorris.io/jokes/random')
 
  const newAnswer= {
-  isAuthor: true,
-  id: new Date().toLocaleString(),
-  messageText: response.data.value
- }
+   isAuthor: true,
+   id: new Date().toLocaleString(),
+   messageText: response.data.value
+  }
  
  setMessageStory(prevState => [...prevState, newAnswer])
  
@@ -103,11 +107,11 @@ async function getAnser(e){
           return {...contact}
       } else {
           
-          return {...contact, messageStory: [...contacts[index].messageStory, contact.messageStory, newAnser]}
+          return {...contact, messageStory: [...contacts[index].messageStory, contact.messageStory, newAnswer]}
       }
    })
  })
- localStorage.setItem('contacts', JSON.stringify(contacts))
+ 
 }
   
 
@@ -133,7 +137,7 @@ const sortedContacts = useMemo(() => {
             Chats:
             {sortedContacts.map(contact =>
             <Contact 
-            id={contact.id}
+            key={contact.name}
             name={contact.name} 
             ChangeMessageStory={ChangeMessageStory}
             messageStory= {contact.messageStory}
@@ -145,7 +149,7 @@ const sortedContacts = useMemo(() => {
        
        
        <div className='MessagesBlock'>
-          <MessageStory  
+          <MessageStory 
               name={currentContact} 
               messageStory={messageStory}
             /> 

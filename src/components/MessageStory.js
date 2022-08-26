@@ -15,11 +15,11 @@ return(
            {props.messageStory.map(story =>{
             if(story.isAuthor){
               return(
-              <ContactMessage id={story.id} text={story.messageText}/>
+              <ContactMessage key={story.id} id={story.id} text={story.messageText}/>
               )
             }else{
               return(
-                <MyMessage id={story.id} text={story.messageText}/>
+                <MyMessage key={story.id}  id={story.id} text={story.messageText}/>
               )
             }
            })}
