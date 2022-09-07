@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import React, { useState, useMemo, } from 'react';
+import React, { useState, useMemo, useEffect, } from 'react';
 import './App.css';
 import Contact from './components/Contact';
 import MessageStory from './components/MessageStory';
@@ -44,29 +44,31 @@ function App() {
   }])
 
     
-let [messageStory, setMessageStory]= useState([
+ let [messageStory, setMessageStory]= useState([
         {messageText: 'Hi', id: "2020-10-01 21:21:27", isAuthor: true},
         {messageText: "Hello", id:"2020-10-01 21:22:48", isAuthor: false}
     ])
   
   
-let localContacts =  JSON.parse(localStorage.getItem('contacts'))|| contacts
+ let localContacts =  JSON.parse(localStorage.getItem('contacts'))|| contacts
 
-const [messageText, setMessageText]= useState('')
-const [searchContacts, setSearchContacts]= useState('')
-const [currentContact, setCurrentContact] = useState('messageStory')
-function setLocalStorage() {
+ const [messageText, setMessageText]= useState('')
+ const [searchContacts, setSearchContacts]= useState('')
+ const [currentContact, setCurrentContact] = useState('messageStory')
+ useEffect(()=> {
    localStorage.setItem('contacts', JSON.stringify(contacts))
-     console.log(JSON.parse(localStorage.getItem('contacts')))
-}   
-const ChangeMessageStory = (name, story) =>{
+   console.log(JSON.parse(localStorage.getItem('contacts')))
+  } , [contacts])
+   
+   
+ const ChangeMessageStory = (name, story) =>{
     
     setCurrentContact(name)
     setMessageStory(story)
    }
 
 
-const AddNewMessage=()=>{
+ const AddNewMessage=()=>{
     const newMessage ={
       isAuthor: false,
       id: new Date().toLocaleString(),
@@ -87,35 +89,35 @@ const AddNewMessage=()=>{
    
     setMessageText('')
     setTimeout( getAnswer,6000)
-    setTimeout(setLocalStorage, 7000) 
+    
   }
 
-async function getAnswer(){
- const response = await axios.get('https://api.chucknorris.io/jokes/random')
+ async function getAnswer(){
+   const response = await axios.get('https://api.chucknorris.io/jokes/random')
 
- const newAnswer= {
+   const newAnswer= {
    isAuthor: true,
    id: new Date().toLocaleString(),
    messageText: response.data.value
-  }
+   }
  
- setMessageStory(prevState => [...prevState, newAnswer])
+   setMessageStory(prevState => [...prevState, newAnswer])
  
- setContacts(prevState => {
-   return prevState.map((contact, index) => {
+   setContacts(prevState => {
+     return prevState.map((contact, index) => {
       if (contact.name !== currentContact) {
           return {...contact}
       } else {
           
           return {...contact, messageStory: [...contacts[index].messageStory, contact.messageStory, newAnswer]}
       }
-   })
- })
+     })
+    })
  
-}
+  }
   
 
-const sortedContacts = useMemo(() => {
+ const sortedContacts = useMemo(() => {
   return localContacts.filter(contact => contact.name.toLocaleLowerCase().includes(searchContacts))
   }, [searchContacts, localContacts])
 
