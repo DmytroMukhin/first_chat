@@ -82,7 +82,7 @@ function App() {
           if (contact.name !== currentContact) {
               return {...contact}
           } else {
-              return {...contact, messageStory:[...contacts[index].messageStory, contact.messageStory, newMessage]}
+              return {...contact, messageStory:[...contact.messageStory, newMessage]}
           }
       })
     })
@@ -109,7 +109,7 @@ function App() {
           return {...contact}
       } else {
           
-          return {...contact, messageStory: [...contacts[index].messageStory, contact.messageStory, newAnswer]}
+          return {...contact, messageStory: [...contact.messageStory, newAnswer]}
       }
      })
     })
